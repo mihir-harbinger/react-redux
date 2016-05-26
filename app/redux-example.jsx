@@ -1,19 +1,12 @@
 var redux = require('redux');
+console.log("Starting redux example");
 
-//same output with the same input
-
-//no side effects. should not update variables outside of the scope of the function
-
-//should be synchronous. promises not allowed.
-
-console.log('Starting redux example');
-
-//pure functions
 function add(a, b){
   return a + b;
 }
 
 var a = 3;
+
 function add(b){
   return a + b;
 }
@@ -21,6 +14,7 @@ function add(b){
 var result;
 function add(a, b){
   result = a + b;
+  return result;
 }
 
 function add(a, b){
@@ -30,18 +24,15 @@ function add(a, b){
 function changeProp(obj){
   return{
     ...obj,
-    name: 'Jen'
-  }
-  // obj.name = 'Jen';
-  // return obj;
+    name: 'Mike'
+  };
+  // obj.name = 'Mike';
 }
 
-var startingValue = {
-  name: 'John',
-  age: 25
-}
+var obj = {
+  name: 'Mihir',
+  age: 22
+};
 
-var res = changeProp(startingValue);
-
-console.log(startingValue);
-console.log(res);
+console.log(changeProp(obj));
+console.log(obj);
