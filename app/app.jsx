@@ -8,10 +8,10 @@ $(document).foundation();
 //load custom css
 require('style!css!sass!AppCss');
 
-ReactDOM.render(
-  <h3>Boilerplate 3</h3>,
-  document.getElementById('app')
-);
+// ReactDOM.render(
+//   <h3>Boilerplate 3</h3>,
+//   document.getElementById('app')
+// );
 
 //load redux
 // require('./redux-example.jsx')
