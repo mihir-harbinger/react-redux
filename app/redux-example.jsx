@@ -2,15 +2,8 @@ var redux = require('redux');
 
 console.log('Starting redux example');
 
-var defaultState = {
-  name: 'Anonymous',
-  hobbies: [],
-  movies: []
-};
-
-var hobbyKey = 1;
-var movieKey = 1;
-
+//Name reducer and action generators
+//----------------------------------
 var nameReducer = (state = 'Anonymous', action) => {
   switch(action.type){
     case 'CHANGE_NAME':
@@ -20,6 +13,16 @@ var nameReducer = (state = 'Anonymous', action) => {
   }
 }
 
+var changeName = (name) => {
+  return {
+    type: 'CHANGE_NAME',
+    name: name
+  }
+}
+
+//Hobbies reducer and action generators
+//----------------------------------
+var hobbyKey = 1;
 var hobbiesReducer = (state = [], action) => {
   switch(action.type){
     case 'ADD_HOBBY':
@@ -37,6 +40,23 @@ var hobbiesReducer = (state = [], action) => {
   }
 }
 
+var addHobby = (hobby) => {
+  return {
+    type: 'ADD_HOBBY',
+    hobby: hobby
+  }
+}
+
+var removeHobby = (id) => {
+  return {
+    type: 'REMOVE_HOBBY',
+    id: id
+  }
+}
+
+//Movies reducer and action generators
+//----------------------------------
+var movieKey = 1;
 var moviesReducer = (state = [], action) => {
   switch(action.type){
     case 'ADD_MOVIE':
@@ -55,6 +75,24 @@ var moviesReducer = (state = [], action) => {
   }
 }
 
+var addMovie = (name, genre) => {
+  return {
+    type: 'ADD_MOVIE',
+    name: name,
+    genre: genre
+  }
+}
+
+var removeMovie = (id) => {
+  return {
+    type: 'REMOVE_MOVIE',
+    id: id
+  }
+}
+
+
+//Reducer
+//----------------------------------
 var reducer = redux.combineReducers({
   name: nameReducer,
   hobbies: hobbiesReducer,
@@ -69,56 +107,8 @@ var unsubscribe = store.subscribe(() => {
   console.log(state);
 });
 
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Monica'
-});
-
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Running'
-});
-
-store.dispatch({
-  type: 'ADD_HOBBY',
-  hobby: 'Walking'
-});
-
-store.dispatch({
-  type: 'REMOVE_HOBBY',
-  id: 2
-});
-
-store.dispatch({
-  type: 'CHANGE_NAME',
-  name: 'Jane'
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movie: {
-    name: 'Whiplash',
-    genre: 'Drama'
-  }
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movie: {
-    name: 'Avengers',
-    genre: 'Action'
-  }
-});
-
-store.dispatch({
-  type: 'ADD_MOVIE',
-  movie: {
-    name: 'Iron Lady',
-    genre: 'Political Drama'
-  }
-});
-
-store.dispatch({
-  type: 'REMOVE_MOVIE',
-  id: 1
-});
+store.dispatch(changeName('Mihir'));
+store.dispatch(addHobby('Singing'));
+store.dispatch(removeHobby(1));
+store.dispatch(addMovie('12 years a slave', 'History'));
+store.dispatch(removeMovie(1));
