@@ -11,45 +11,56 @@ var defaultState = {
 var hobbyKey = 1;
 var movieKey = 1;
 
-var reducer = (state = defaultState, action) => {
-    switch(action.type){
-      case 'CHANGE_NAME':
-        return{
-          ...state,
-          name: action.name
+var nameReducer = (state = 'Anonymous', action) => {
+  switch(action.type){
+    case 'CHANGE_NAME':
+      return action.name
+    default:
+      return state;
+  }
+}
+
+var hobbiesReducer = (state = [], action) => {
+  switch(action.type){
+    case 'ADD_HOBBY':
+      return [
+        ...state,
+        {
+          id: hobbyKey++,
+          name: action.hobby
         }
-      case 'ADD_HOBBY':
-        return{
-          ...state,
-          hobbies: [
-            ...state.hobbies,
-            {
-              id: hobbyKey++,
-              hobby: action.hobby
-            }
-          ]
+      ]
+    case 'REMOVE_HOBBY':
+      return state.filter((hobby) => hobby.id !== action.id);
+    default:
+      return state;
+  }
+}
+
+var moviesReducer = (state = [], action) => {
+  switch(action.type){
+    case 'ADD_MOVIE':
+      return [
+        ...state,
+        {
+          id: movieKey++,
+          name: action.name,
+          genre: action.genre
         }
-      case 'REMOVE_HOBBY':
-        return{
-          ...state,
-          hobbies: state.hobbies.filter((hobby) => hobby.id !== action.id)
-        }
-      case 'ADD_MOVIE':
-        return{
-          ...state,
-          movies: [
-            ...state.movies,
-            {
-              id: movieKey++,
-              name: action.movie.name,
-              genre: action.movie.genre
-            }
-          ]
-        }
-      default:
-        return state;
-    }
-};
+      ]
+    case 'REMOVE_MOVIE':
+      return state.filter((movie) => movie.id !== action.id);
+    default:
+      return state;
+  }
+}
+
+var reducer = redux.combineReducers({
+  name: nameReducer,
+  hobbies: hobbiesReducer,
+  movies: moviesReducer
+});
+
 var store = redux.createStore(reducer, redux.compose(window.devToolsExtension ? window.devToolsExtension() : f => f));
 // console.log('currentState', store.getState());
 
@@ -105,4 +116,9 @@ store.dispatch({
     name: 'Iron Lady',
     genre: 'Political Drama'
   }
+});
+
+store.dispatch({
+  type: 'REMOVE_MOVIE',
+  id: 1
 });
